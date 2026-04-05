@@ -93,15 +93,18 @@ curl -sL "https://r.jina.ai/{url}" 2>/dev/null
 
 分析完内容后，判断是否值得加图：
 
-| 内容特征 | 图表类型 |
-|---------|---------|
-| 明确的因果链（A 导致 B，B 导致 C） | Mermaid flowchart |
-| 有明确顺序的步骤流程（3 步以上） | Mermaid flowchart |
-| 概念间有包含/对立/互补关系 | Mermaid graph |
-| 有形象概念但 Mermaid 表达不了 | 内联 SVG |
-| 纯观点/金句/哲学/数字列表 | **不加图** |
+| 内容特征 | 图表类型 | SVG 模板（见 svg-design-spec.md） |
+|---------|---------|------|
+| 排除/筛选/过滤逻辑（A 被排除，B 存活） | 内联 SVG | **时间线排除法** |
+| 明确的因果链（A → B → C → D） | 内联 SVG 或 Mermaid | **因果流程链** |
+| 两个概念对比/Before-After | 内联 SVG | **对比/并列** |
+| 核心-外围关系、引力场隐喻 | 内联 SVG | **环形/引力场**（慎用） |
+| 有明确顺序的步骤流程（3 步以上） | Mermaid flowchart | — |
+| 概念间有包含/对立/互补关系 | Mermaid graph | — |
+| 纯观点/金句/哲学/数字列表 | **不加图** | — |
 
 > **原则**：图是配角，只在图比文字能多传递 30% 以上信息时才加。宁可不加，不要为了加图而加图。
+> **内联 SVG 优先于 Mermaid**：SVG 可控性更强、样式与卡片统一、不依赖 CDN。Mermaid 仅在节点 ≥ 6 个且有复杂分支时使用。
 
 ### Step 2：分析布局
 
@@ -209,30 +212,26 @@ flowchart LR
 
 #### 内联 SVG
 
-当内容更适合形象图示而非流程图时，用内联 SVG：
+当内容更适合形象图示而非流程图时，用内联 SVG。
 
-```html
-<div class="diagram-block">
-  <svg viewBox="0 0 500 120" xmlns="http://www.w3.org/2000/svg"
-       style="width:100%;height:auto;display:block;">
-    <!-- 用卡片 accent 色填充，与整体配色统一 -->
-    <rect x="10" y="40" width="120" height="44" rx="8"
-          fill="rgba(196,151,58,0.15)" stroke="#8C6830" stroke-width="1.5"/>
-    <text x="70" y="67" text-anchor="middle"
-          font-family="-apple-system,sans-serif" font-size="15" fill="#EAD9B5">概念A</text>
-    <!-- 箭头 -->
-    <line x1="132" y1="62" x2="178" y2="62" stroke="#8C6830" stroke-width="2"/>
-    <polygon points="178,56 190,62 178,68" fill="#8C6830"/>
-    <!-- 更多节点... -->
-  </svg>
-</div>
-```
+**读取 `references/svg-design-spec.md` 获取完整 SVG 设计规范**（网格、排版、配色、渐变/发光效果、布局模板、反模式等），所有 SVG 参数以该文件为准。
 
-**SVG 原则**：
-- viewBox 固定宽 500，高度按内容决定（通常 80-160）
-- 颜色用卡片的 accent/text/muted 固定值，不用 CSS 变量（SVG 属性不继承）
-- 字体用系统无衬线（`-apple-system,sans-serif`），确保截图渲染稳定
-- 保持极简：只用矩形、箭头、文字，不追求复杂图形
+**快速提醒**（详见 svg-design-spec.md）：
+- viewBox 宽 `520`（匹配卡片内容宽度），高度按内容 160-280px
+- 8px 网格对齐所有尺寸
+- 颜色用卡片 accent/text/muted 的**固定 hex 值**，不用 CSS 变量
+- 字体统一 `-apple-system, 'Helvetica Neue', sans-serif`
+- 单一视觉焦点 + 透明度四级制（1.0 / 0.7 / 0.4 / 0.02-0.08）
+- 深色卡片用 `feGaussianBlur` 发光滤镜替代投影
+- 图表高度不超过卡片总高 15%，图是配角
+
+**可用布局模板**（svg-design-spec.md 中有完整代码骨架）：
+| 模板 | 适用场景 |
+|------|---------|
+| 时间线排除法 | 排除/筛选/过滤逻辑 |
+| 因果流程链 | A → B → C → D 因果关系 |
+| 对比/并列 | Before/After、两概念对比 |
+| 环形/引力场 | 核心-外围关系（慎用） |
 
 **硬性约束**：
 - 卡片宽度：默认 **600px**，仅在用户明确要求时使用 480 / 900
