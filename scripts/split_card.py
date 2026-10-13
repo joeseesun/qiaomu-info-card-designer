@@ -141,13 +141,14 @@ def split_card(image_path, max_slice=1200, min_total=1400):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: split_card.py <image_path> [max_slice=1200] [min_total=1400]")
-        sys.exit(1)
+    import argparse
 
-    path = sys.argv[1]
-    max_s = int(sys.argv[2]) if len(sys.argv) > 2 else 1200
-    min_t = int(sys.argv[3]) if len(sys.argv) > 3 else 1400
+    parser = argparse.ArgumentParser(description="Split a tall info card image at natural background gaps.")
+    parser.add_argument("image_path")
+    parser.add_argument("max_slice", nargs="?", type=int, default=1200)
+    parser.add_argument("min_total", nargs="?", type=int, default=1400)
+    args = parser.parse_args()
+    path, max_s, min_t = args.image_path, args.max_slice, args.min_total
     result = split_card(path, max_s, min_t)
     print(f"\nResult: {len(result)} file(s)")
     for p in result:

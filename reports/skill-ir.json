@@ -1,0 +1,84 @@
+{
+  "schema_version": "2.0.0-qiaomu-lite",
+  "generated_at": "2026-10-13",
+  "package": {
+    "name": "qiaomu-info-card-designer",
+    "version": "1.0.0",
+    "owner": "向阳乔木",
+    "maturity_tier": "scaffold",
+    "lifecycle_stage": "public",
+    "upstream_inspiration": null,
+    "upstream_sync": {}
+  },
+  "intent": {
+    "description": "将任意文本/URL/信息转化为杂志质感 HTML 信息卡片，并自动截图保存为图片。\n支持直接输入 URL（X/Twitter、网页文章等），自动抓取内容、提炼要点、生成卡片。\n适合分享到 X (Twitter)、微信、小红书等平台。\n触发词：\"生成信息卡\"、\"做张信息卡\"、\"把这段内容做成卡片\"、\"信息卡片\"、\"make info card\"、\"generate card\"、\"把这个链接做成卡片\"。\n卡片特点：大字号、强排版张力、瑞士国际主义 + 杂志质感风格，生成后自动截图，超长智能分割输出图片。\n不用于讲解“某个系统/算法如何运作”的交互式等距机制图（交给 anatomy）、数据报告网页（交给 qiaomu-chart-report）或可编辑白板画布（交给 qiaomu-tldraw-skill）。",
+    "job_to_be_done": "将任意文本/URL/信息转化为杂志质感 HTML 信息卡片，并自动截图保存为图片。\n支持直接输入 URL（X/Twitter、网页文章等），自动抓取内容、提炼要点、生成卡片。\n适合分享到 X (Twitter)、微信、小红书等平台。\n触发词：\"生成信息卡\"、\"做张信息卡\"、\"把这段内容做成卡片\"、\"信息卡片\"、\"make info card\"、\"generate card\"、\"把这个链接做成卡片\"。\n卡片特点：大字号、强排版张力、瑞士国际主义 + 杂志质感风格，生成后自动截图，超长智能分割输出图片。\n不用于讲解“某个系统/算法如何运作”的交互式等距机制图（交给 anatomy）、数据报告网页（交给 qiaomu-chart-report）或可编辑白板画布（交给 qiaomu-tldraw-skill）。",
+    "target_users": [
+      "Qiaomu operator"
+    ],
+    "inputs": [],
+    "outputs": [],
+    "exclusions": [],
+    "qiaomu_defaults": {}
+  },
+  "triggers": {
+    "should_trigger": [
+      "把这段内容做成信息卡",
+      "把这个链接做成一张小红书信息卡片",
+      "make info card from this text"
+    ],
+    "should_not_trigger": [
+      "画一张等距交互图讲 LRU 缓存怎么运作",
+      "把 CSV 做成数据报告网页"
+    ],
+    "near_neighbor": [
+      "做一个 tldraw 白板流程图"
+    ]
+  },
+  "workflow": {
+    "router_rules": [],
+    "compact_workflow": [],
+    "gate_ladder": [],
+    "output_contract": []
+  },
+  "resources": {
+    "references": [
+      "references/design-spec.md",
+      "references/svg-design-spec.md"
+    ],
+    "scripts": [
+      "scripts/split_card.py"
+    ],
+    "evals": [
+      "evals/trigger_cases.json"
+    ],
+    "reports": [
+      "reports/trigger-eval.json"
+    ]
+  },
+  "portability": {
+    "canonical_format": "agent-skills",
+    "adapter_targets": [
+      "claude",
+      "openai",
+      "generic",
+      "agent-skills-compatible"
+    ],
+    "activation": {},
+    "execution": {},
+    "trust": {},
+    "permissions": {
+      "network": "fetch user-provided URLs only",
+      "file_write": "card HTML and PNG output",
+      "subprocess": "local Chrome screenshot and Python split"
+    },
+    "degradation": {}
+  },
+  "gates": {},
+  "evidence_boundary": {
+    "generated_reports_are_evidence": true,
+    "planned_work_is_evidence": false,
+    "missing_external_or_human_evidence_label": "missing evidence",
+    "public_claim_policy": "claim only what local validation, install proof, human review, or provider-backed evidence actually supports"
+  }
+}

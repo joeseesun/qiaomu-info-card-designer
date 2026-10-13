@@ -1,0 +1,14 @@
+interface:
+  display_name: "Qiaomu Info Card Designer"
+  short_description: "把文本或链接做成杂志质感的 HTML 信息卡并截图"
+  default_prompt: "Use $qiaomu-info-card-designer to turn my text or URL into a magazine-style HTML info card, screenshot it, and split very long cards when asked."
+  examples:
+    - "把这段内容做成信息卡"
+    - "把这个链接做成一张小红书信息卡片"
+compatibility:
+  canonical_format: "agent-skills"
+  adapter_targets: ["claude", "openai", "generic", "agent-skills-compatible"]
+  permissions:
+    network: "fetch user-provided URLs only"
+    file_write: "card HTML and PNG output"
+    subprocess: "local Chrome screenshot and Python split"

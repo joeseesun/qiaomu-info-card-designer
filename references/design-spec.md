@@ -124,11 +124,97 @@ body {
   color: var(--color-accent);
 }
 
-/* 背景色块 */
+/* 要点列表容器（模板 D） */
+.points {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* 单个要点：序号+内容，奇偶交替底色 */
+.point {
+  padding: 16px 18px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.point:nth-child(odd) {
+  background: rgba(0,0,0,0.035);
+}
+.point:nth-child(even) {
+  background: transparent;
+}
+
+/* 序号 */
+.point-num {
+  font-family: var(--font-label);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-accent);
+  flex-shrink: 0;
+  width: 32px;
+  text-align: center;
+  line-height: 1;
+  padding-top: 2px;
+}
+
+/* 内容区 */
+.point-content {
+  flex: 1;
+}
+
+/* 条目标题：28px + 图标 */
+.point h3 {
+  font-family: var(--font-title);
+  font-size: 28px;
+  font-weight: normal;
+  margin-bottom: 6px;
+  color: #0a0a0a;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.point h3 i, .point h3 svg {
+  width: 22px;
+  height: 22px;
+  color: var(--color-accent);
+  flex-shrink: 0;
+}
+
+/* 条目正文：20px */
+.point p {
+  font-family: var(--font-body);
+  font-size: 20px;
+  line-height: 1.65;
+  color: var(--color-text);
+}
+
+/* 背景色块 + 装饰引号 */
 .bg-block {
   background: rgba(0,0,0,0.03);
-  padding: 18px 20px;
+  padding: 24px 24px 20px;
   border-left: 4px solid var(--color-accent);
+  position: relative;
+}
+.bg-block::before {
+  content: '\201C';
+  font-family: Georgia, serif;
+  font-size: 56px;
+  color: var(--color-accent);
+  opacity: 0.15;
+  position: absolute;
+  top: -4px;
+  left: 12px;
+  line-height: 1;
+}
+.bg-block p {
+  font-family: var(--font-body);
+  font-size: 22px;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--color-text);
+  position: relative;
+  z-index: 1;
 }
 
 /* 数字大字 — 系统字体 */
@@ -303,6 +389,7 @@ body {
 适用：5+ 要点、文章要点列表、手机端高密度展示
 
 > ✅ 高密度内容的**默认选择**，手机上每个要点都能完整展示，不会被挤压。
+> ⚠️ **必须引入 Lucide 图标 CDN**，条目用序号+色块+图标，不用 border-left 竖线。
 
 ```html
 <div class="card">
@@ -316,32 +403,139 @@ body {
   <!-- 主标题 -->
   <div>
     <h1 class="main-title" style="font-size: 52px;">标题</h1>
-    <div class="accent-bar-full" style="margin-top: 16px;"></div>
+    <p class="subtitle">副标题或来源 · 日期</p>
   </div>
+  <div class="accent-bar-full"></div>
 
-  <!-- 要点列表（单栏，每条独立） -->
-  <div style="display: flex; flex-direction: column; gap: 24px;">
+  <!-- 要点列表（序号+色块+图标，奇偶交替底色） -->
+  <div class="points">
     <!-- 要点 1 -->
-    <div style="border-left: 4px solid var(--color-accent); padding-left: 20px;">
-      <h3 style="font-family: var(--font-title); font-size: 22px; font-weight: normal; margin-bottom: 6px; color: #0a0a0a;">条目标题</h3>
-      <p class="content-body" style="font-size: 16px;">要点描述，1-2 句话，手机上清晰可读。</p>
+    <div class="point">
+      <div class="point-num">1</div>
+      <div class="point-content">
+        <h3><i data-lucide="lightbulb"></i>条目标题</h3>
+        <p>要点描述，1-2 句话，手机上清晰可读。</p>
+      </div>
     </div>
     <!-- 要点 2 -->
-    <div style="border-left: 4px solid var(--color-accent); padding-left: 20px;">
-      <h3 style="font-family: var(--font-title); font-size: 22px; font-weight: normal; margin-bottom: 6px; color: #0a0a0a;">条目标题</h3>
-      <p class="content-body" style="font-size: 16px;">要点描述。</p>
+    <div class="point">
+      <div class="point-num">2</div>
+      <div class="point-content">
+        <h3><i data-lucide="rocket"></i>条目标题</h3>
+        <p>要点描述。</p>
+      </div>
     </div>
     <!-- 更多要点... -->
   </div>
 
-  <!-- 金句引用（可选） -->
+  <!-- 金句引用（可选，带装饰引号） -->
   <div class="bg-block">
-    <p style="font-family: var(--font-body); font-size: 18px; font-style: italic; line-height: 1.6;">"原文中最有冲击力的一句话"</p>
+    <p>"原文中最有冲击力的一句话"</p>
   </div>
 
   <!-- 页脚 -->
-  <div class="footer">@vista8 · 向阳乔木推荐看</div>
+  <div class="footer">来源 · 出处 · @vista8</div>
 </div>
+
+<!-- 必须在 </body> 前初始化图标 -->
+<script>lucide.createIcons();</script>
+```
+
+**对应 CSS（必须包含）**：
+
+```css
+/* 要点列表容器 */
+.points {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* 单个要点：序号+内容，奇偶交替底色 */
+.point {
+  padding: 16px 18px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.point:nth-child(odd) {
+  background: rgba(0,0,0,0.035);
+}
+.point:nth-child(even) {
+  background: transparent;
+}
+
+/* 序号 */
+.point-num {
+  font-family: var(--font-label);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-accent);
+  flex-shrink: 0;
+  width: 32px;
+  text-align: center;
+  line-height: 1;
+  padding-top: 2px;
+}
+
+/* 内容区 */
+.point-content {
+  flex: 1;
+}
+
+/* 条目标题：28px + 图标 */
+.point h3 {
+  font-family: var(--font-title);
+  font-size: 28px;
+  font-weight: normal;
+  margin-bottom: 6px;
+  color: #0a0a0a;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.point h3 i, .point h3 svg {
+  width: 22px;
+  height: 22px;
+  color: var(--color-accent);
+  flex-shrink: 0;
+}
+
+/* 条目正文：20px */
+.point p {
+  font-family: var(--font-body);
+  font-size: 20px;
+  line-height: 1.65;
+  color: var(--color-text);
+}
+
+/* 金句引用：22px + 装饰引号 */
+.bg-block {
+  background: rgba(0,0,0,0.03);
+  padding: 24px 24px 20px;
+  border-left: 4px solid var(--color-accent);
+  position: relative;
+}
+.bg-block::before {
+  content: '\201C';
+  font-family: Georgia, serif;
+  font-size: 56px;
+  color: var(--color-accent);
+  opacity: 0.15;
+  position: absolute;
+  top: -4px;
+  left: 12px;
+  line-height: 1;
+}
+.bg-block p {
+  font-family: var(--font-body);
+  font-size: 22px;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--color-text);
+  position: relative;
+  z-index: 1;
+}
 ```
 
 ## 卡片宽度方案
