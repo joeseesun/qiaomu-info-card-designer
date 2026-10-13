@@ -1,0 +1,96 @@
+{
+  "ok": true,
+  "threshold": 0.34,
+  "description_concepts": [
+    "card",
+    "share",
+    "source"
+  ],
+  "missing_description_concepts": [],
+  "summary": {
+    "total": 6,
+    "passed": 6,
+    "false_positive": 0,
+    "false_negative": 0,
+    "pass_rate": 1.0
+  },
+  "failures": [],
+  "results": {
+    "should_trigger": [
+      {
+        "prompt": "把这段内容做成信息卡",
+        "family": "text_card",
+        "expected_trigger": true,
+        "predicted_trigger": true,
+        "passed": true,
+        "score": 0.667,
+        "matched_concepts": [
+          "card",
+          "source"
+        ],
+        "negative_pattern": null
+      },
+      {
+        "prompt": "把这个链接做成一张小红书信息卡片",
+        "family": "url_card",
+        "expected_trigger": true,
+        "predicted_trigger": true,
+        "passed": true,
+        "score": 1.0,
+        "matched_concepts": [
+          "card",
+          "share",
+          "source"
+        ],
+        "negative_pattern": null
+      },
+      {
+        "prompt": "make info card from this text",
+        "family": "en",
+        "expected_trigger": true,
+        "predicted_trigger": true,
+        "passed": true,
+        "score": 0.667,
+        "matched_concepts": [
+          "card",
+          "source"
+        ],
+        "negative_pattern": null
+      }
+    ],
+    "should_not_trigger": [
+      {
+        "prompt": "画一张等距交互图讲 LRU 缓存怎么运作",
+        "family": "mechanism_figure",
+        "expected_trigger": false,
+        "predicted_trigger": false,
+        "passed": true,
+        "score": 0.0,
+        "matched_concepts": [],
+        "negative_pattern": "等距交互图"
+      },
+      {
+        "prompt": "把 CSV 做成数据报告网页",
+        "family": "chart_report",
+        "expected_trigger": false,
+        "predicted_trigger": false,
+        "passed": true,
+        "score": 0.0,
+        "matched_concepts": [],
+        "negative_pattern": "数据报告网页"
+      }
+    ],
+    "near_neighbor": [
+      {
+        "prompt": "做一个 tldraw 白板流程图",
+        "family": "tldraw",
+        "expected_trigger": false,
+        "predicted_trigger": false,
+        "passed": true,
+        "score": 0.0,
+        "matched_concepts": [],
+        "negative_pattern": "tldraw"
+      }
+    ]
+  }
+}

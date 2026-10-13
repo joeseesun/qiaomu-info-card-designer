@@ -7,6 +7,26 @@
 
 ---
 
+<!-- qiaomu-profile:start -->
+## 关于向阳乔木
+
+向阳乔木（乔向阳 / Joe）是一位实践型 AI 产品与内容创作者，长期把前沿 AI 变化转译成可复用的工作流、产品判断、AI 编程实践、AI 搜索实践和 GEO/AI 营销方法。
+
+- 个人网站: https://qiaomu.ai
+- 博客: https://blog.qiaomu.ai
+- X: https://x.com/vista8
+- GitHub: https://github.com/joeseesun/
+- 微信公众号: 向阳乔木推荐看
+
+### 支持与关注
+
+| 打赏支持 | 微信公众号 |
+|---|---|
+| <img src="assets/qiaomu-profile/qiaomu_reward_qr.png" alt="向阳乔木打赏二维码" width="180" /> | <img src="assets/qiaomu-profile/qiaomu_wechat_public_account_qr.jpg" alt="向阳乔木推荐看公众号二维码" width="180" /> |
+| 感谢支持乔木持续分享 AI 实践 | 扫码关注「向阳乔木推荐看」 |
+
+<!-- qiaomu-profile:end -->
+
 <a name="english"></a>
 ## English
 
@@ -45,7 +65,7 @@ Say any of these to Claude:
 - "把这段内容做成卡片"
 - "make info card" / "generate card"
 
-### Usage examples
+### Natural-language examples
 
 ```
 用户: 把这个链接做成信息卡 https://wise.readwise.io/issues/wisereads-vol-134/
@@ -118,7 +138,7 @@ npx skills add joeseesun/info-card-designer
 - "信息卡片"
 - "make info card" / "generate card"
 
-### 使用示例
+### 你可以直接这样说
 
 ```
 把这个链接做成信息卡：https://wise.readwise.io/issues/wisereads-vol-134/
@@ -146,3 +166,13 @@ npx skills add joeseesun/info-card-designer
 
 设计风格灵感来自 [@shao__meng](https://x.com/shao__meng) 在 X 上的这篇分享：
 [https://x.com/shao__meng/status/2027368489439334504](https://x.com/shao__meng/status/2027368489439334504)
+
+## 验证 / Verification
+
+```bash
+python3 ~/.agents/skills/qiaomu-meta-skill/scripts/validate_skill.py <skill-dir>
+```
+
+## 许可证
+
+MIT，见 [LICENSE](LICENSE)。

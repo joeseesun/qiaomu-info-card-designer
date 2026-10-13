@@ -1,0 +1,66 @@
+{
+  "recommended_threshold": 0.34,
+  "description_required_concepts": [
+    "card"
+  ],
+  "positive_concepts": {
+    "card": [
+      "信息卡",
+      "卡片",
+      "info card",
+      "card"
+    ],
+    "source": [
+      "文本",
+      "链接",
+      "url",
+      "内容",
+      "这段",
+      "text",
+      "link"
+    ],
+    "share": [
+      "小红书",
+      "微信",
+      "x",
+      "分享"
+    ]
+  },
+  "negative_patterns": [
+    "等距交互图",
+    "isometric",
+    "数据报告网页",
+    "tldraw",
+    "白板"
+  ],
+  "should_trigger": [
+    {
+      "text": "把这段内容做成信息卡",
+      "family": "text_card"
+    },
+    {
+      "text": "把这个链接做成一张小红书信息卡片",
+      "family": "url_card"
+    },
+    {
+      "text": "make info card from this text",
+      "family": "en"
+    }
+  ],
+  "should_not_trigger": [
+    {
+      "text": "画一张等距交互图讲 LRU 缓存怎么运作",
+      "family": "mechanism_figure"
+    },
+    {
+      "text": "把 CSV 做成数据报告网页",
+      "family": "chart_report"
+    }
+  ],
+  "near_neighbor": [
+    {
+      "text": "做一个 tldraw 白板流程图",
+      "family": "tldraw"
+    }
+  ]
+}
